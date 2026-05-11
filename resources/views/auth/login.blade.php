@@ -1,6 +1,6 @@
 <x-layout>
     <x-form title="Login" description="Glad to have you back.">
-                    <form action="/login" method="POST" class="mt-10 space-y-4">
+                    <form method="POST" action="/login" class="mt-10 space-y-4">
                 @csrf
 
                 <x-form.field name="email" label="Email" type="email" />

@@ -11,8 +11,3 @@
             </form>
     </x-form>
 </x-layout>
-
- {{-- <div class="space-y-2">
-            <label for="name" class="label">Name</label>
-            <input type="text" class="input" id="name" name="name">
-        </div> --}}

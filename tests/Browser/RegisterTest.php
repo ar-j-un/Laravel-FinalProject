@@ -7,8 +7,7 @@ it('registers a user', function () {
     $response = $this->post('/register', [
         'name' => 'Sara',
         'email' => 'sara@example.com',
-        'password' => 'Password123!',
-        'password_confirmation' => 'Password123!',
+        'password' => 'Password',
     ]);
 
     $response->assertRedirect('/');

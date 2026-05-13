@@ -13,9 +13,28 @@
         <main class="max-w-7xl mx-auto px-6 pb-10 py-6">
             {{ $slot }}
         </main>
-        {{-- {{ dd(session()->all()) }} --}}
+        
         @if(session('success'))
-            <div>{{ session('success') }}</div>
+            <div
+                x-data="{ show: true }"
+                x-init="setTimeout(() => show = false, 3000)"
+                x-show="show"
+                x-transition.opacity.duration.1000ms
+                class="bg-primary px-4 py-4 absolute bottom-4 right-4 rounded-lg"
+            >
+                {{ session('success') }}
+            </div>
         @endif
 </body>
 </html>
+
+
+{{-- {{ dd(session()->all()) }} --}}
+        {{-- <div x-data="{ greeting: 'Hello' }">
+            <p x-text="greeting"></p>
+            <input type="text" x-model="greeting">
+        </div>
+        <div x-data="{ show: 'true' }">
+            <p x-show="show">you can see me</p>
+            <button @click="show = !show">Toggle</button>
+        </div> --}}

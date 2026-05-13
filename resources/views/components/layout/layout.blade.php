@@ -10,8 +10,12 @@
 
 <body class="bg-background text-foreground">
     <x-layout.nav />
-        <main class="max-w-7x1 mx-auto px-6 pb-10 py-6">
+        <main class="max-w-7xl mx-auto px-6 pb-10 py-6">
             {{ $slot }}
         </main>
+        {{-- {{ dd(session()->all()) }} --}}
+        @if(session('success'))
+            <div>{{ session('success') }}</div>
+        @endif
 </body>
 </html>

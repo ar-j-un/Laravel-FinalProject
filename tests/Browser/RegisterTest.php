@@ -9,7 +9,6 @@ it('registers a user', function () {
         'email' => 'sara@example.com',
         'password' => 'Password',
     ]);
-
     $response->assertRedirect('/');
 
     $this->assertAuthenticated();

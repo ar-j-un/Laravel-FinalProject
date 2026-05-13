@@ -1,0 +1,12 @@
+<x-layout>
+    <x-form title="Login" description="Glad to have you back.">
+                    <form method="POST" action="/login" class="mt-10 space-y-4">
+                @csrf
+
+                <x-form.field name="email" label="Email" type="email" />
+                <x-form.field name="password" label="Password" type="password" />
+
+                <button type="submit" class="btn w-full h-10">Sign in</button>
+            </form>
+    </x-form>
+</x-layout>

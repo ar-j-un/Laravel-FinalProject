@@ -9,9 +9,9 @@
         <div class="mt-10">
             <div class="grid md:grid-cols-2 gap-6">
             @forelse ($ideas as $idea)
-                <div class="border border-border rounded-lg bg-card  p-4 md:text-sm">
+                <x-card>
                     <h3>{{ $idea->title }}</h3>
-                </div>
+                </x-card>
             @empty
                 <p class="text-muted-foreground text-sm mt-2">No ideas at this time.</p>  
             @endforelse

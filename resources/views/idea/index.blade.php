@@ -11,6 +11,11 @@
                 @forelse ($ideas as $idea)
                     <x-card href="{{ route('idea.show', $idea) }}">
                         <h3 class="text-foreground text-lg">{{ $idea->title }}</h3>
+                        <div>
+                            <span class="inline-block rounded-full border px-2 py-1 text-xs font-medium bg-primary">
+                                {{ $idea->status->label() }}
+                            </span>
+                        </div>
                         <div class="mt-5 line-clamp-3">{{ $idea->description }}</div>
                         <div class="mt-4">{{ $idea->created_at->diffForHumans() }}</div>
                     </x-card>

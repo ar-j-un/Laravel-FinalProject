@@ -14,7 +14,7 @@ class IdeaController extends Controller
      */
     public function index()
     {
-        $ideas = Auth::user()->ideas()->latest()->get();
+        $ideas = Auth::user()->ideas()->get();
 
         return view('idea.index', [
             'ideas' => $ideas,

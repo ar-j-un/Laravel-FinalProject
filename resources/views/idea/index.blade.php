@@ -5,7 +5,12 @@
                 <h1 class="text-3xl font-bold text-center mb-8">All Ideas</h1>
                 <p class="text-muted-foreground text-sm mt-2">Capture your thoughts. Make a plan.</p>
         </header>
-    
+        <div>
+            <a href="/ideas" class="btn {{ request('status') === null || request('status') === 'all' ? 'btn-primary' : 'btn-outlined' }}">All</a>
+            <a href="/ideas?status=pending" class="btn {{ request('status') === 'pending' ? 'btn-primary' : 'btn-outlined' }}">Pending</a>
+            <a href="/ideas?status=in_progress" class="btn {{ request('status') === 'in_progress' ? 'btn-primary' : 'btn-outlined' }}">In Progress</a>
+            <a href="/ideas?status=completed" class="btn {{ request('status') === 'completed' ? 'btn-primary' : 'btn-outlined' }}">Completed</a>
+        </div>
         <div class="mt-10 text-muted-foreground">
             <div class="grid md:grid-cols-2 gap-6">
                 @forelse ($ideas as $idea)

@@ -24,6 +24,7 @@ class IdeaController extends Controller
 
         return view('idea.index', [
             'ideas' => $ideas,
+            'statusCounts' => Idea::statusCount(Auth::user()),
         ]);
     }
 

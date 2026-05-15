@@ -7,22 +7,18 @@
         </header>
 
         <div>
-            <a href="/ideas" class="btn {{ request()->has('status') ? 'btn-outlined' : '' }}">All</a>
+            <a href="/ideas" class="btn {{ request()->has('status') ? 'btn-outlined' : '' }}">All
+            <span class="text-xs pl-3">{{ $statusCounts->get('all') }}</span>
+            </a>
             @foreach (App\IdeaStatus::cases() as $status)                
-            <a href="/ideas?status={{ $status->value }}" class="btn {{ request('status') === $status->value ? 'btn-primary' : 'btn-outlined' }}">
-                {{ $status->label() }}
+            <a
+                href="/ideas?status={{ $status->value }}"
+                class="btn {{ request('status') === $status->value ? 'btn-primary' : 'btn-outlined' }}"
+            >
+                {{ $status->label() }}<span class="text-xs pl-3">{{ $statusCounts->get($status->value) }}</span>
             </a>
             @endforeach
         </div>
-
-
-        {{-- <div>
-            <a href="/ideas" class="btn {{ request('status') === null || request('status') === 'all' ? 'btn-primary' : 'btn-outlined' }}">All</a>
-            <a href="/ideas?status=pending" class="btn {{ request('status') === 'pending' ? 'btn-primary' : 'btn-outlined' }}">Pending</a>
-            <a href="/ideas?status=in_progress" class="btn {{ request('status') === 'in_progress' ? 'btn-primary' : 'btn-outlined' }}">In Progress</a>
-            <a href="/ideas?status=completed" class="btn {{ request('status') === 'completed' ? 'btn-primary' : 'btn-outlined' }}">Completed</a>
-        </div> --}}
-
 
         <div class="mt-10 text-muted-foreground">
             <div class="grid md:grid-cols-2 gap-6">
@@ -47,3 +43,12 @@
     </div>
 
 </x-layout>
+
+
+
+ {{-- <div>
+            <a href="/ideas" class="btn {{ request('status') === null ? 'btn-primary' : 'btn-outlined' }}">All</a>
+            <a href="/ideas?status=pending" class="btn {{ request('status') === 'pending' ? 'btn-primary' : 'btn-outlined' }}">Pending</a>
+            <a href="/ideas?status=in_progress" class="btn {{ request('status') === 'in_progress' ? 'btn-primary' : 'btn-outlined' }}">In Progress</a>
+            <a href="/ideas?status=completed" class="btn {{ request('status') === 'completed' ? 'btn-primary' : 'btn-outlined' }}">Completed</a>
+        </div> --}}

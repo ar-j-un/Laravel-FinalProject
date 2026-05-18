@@ -15,13 +15,10 @@ it('registers a user', function () {
 
     expect(Auth::user())->toMatchArray([
         'name' => 'Sara',
-        'email' => 'sara@example.com'
+        'email' => 'sara@example.com',
     ]);
-    
+
 });
-
-
-
 
 // it('registers a user', function () {
 //     visit('/register')
@@ -33,9 +30,7 @@ it('registers a user', function () {
 //    $this->assertAuthenticated();
 //  });
 
-
-
- // it('registers a user', function () {
+// it('registers a user', function () {
 //     visit('/register')
 //         ->type('input[name=name]', 'sara')
 //         ->type('input[name=email]', fake()->safeEmail())
@@ -48,7 +43,6 @@ it('registers a user', function () {
 //      ->toBeTrue();
 //      expect(auth()->check())->toBeTrue();
 // });
-
 
 // test('the application returns a successful response', function (): void {
 //     $response = $this->get('/');

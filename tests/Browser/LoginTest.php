@@ -1,13 +1,12 @@
 <?php
 
-
 use App\Models\User;
 
 it('logs in a user', function () {
 
     $user = User::factory()->create([
-            'password' => 'Password',
-        ]);
+        'password' => 'Password',
+    ]);
 
     $response = $this->post('/login', [
         'email' => $user->email,
@@ -18,14 +17,13 @@ it('logs in a user', function () {
 
     $this->assertAuthenticated();
 
-
 });
 
 it('logs out a user', function () {
 
-   $user = User::factory()->create();
+    $user = User::factory()->create();
 
-   $this->actingAs($user);
+    $this->actingAs($user);
 
     $response = $this->post('/logout');
 
@@ -34,10 +32,8 @@ it('logs out a user', function () {
     expect(auth()->check())->toBeFalse();
 
     $this->assertGuest();
-    
+
 });
-
-
 
 // it('logs in a user', function () {
 
@@ -49,7 +45,7 @@ it('logs out a user', function () {
 //         ->fill('email', $user->email)
 //         ->fill('password', 'password')
 //         ->click('@login-button')
-//         ->assertPathIs('/');    
+//         ->assertPathIs('/');
 
 //     $this->assertAuthenticated();
 

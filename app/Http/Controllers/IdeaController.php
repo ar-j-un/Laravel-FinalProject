@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIdeaRequest;
@@ -31,7 +33,7 @@ class IdeaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -39,7 +41,7 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreIdeaRequest $request)
+    public function store(StoreIdeaRequest $request): void
     {
         //
     }
@@ -57,7 +59,7 @@ class IdeaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Idea $idea)
+    public function edit(Idea $idea): void
     {
         //
     }
@@ -65,7 +67,7 @@ class IdeaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateIdeaRequest $request, Idea $idea)
+    public function update(UpdateIdeaRequest $request, Idea $idea): void
     {
         //
     }
@@ -75,6 +77,10 @@ class IdeaController extends Controller
      */
     public function destroy(Idea $idea)
     {
-        //
+        // authorize that the user can delete this idea
+
+        $idea->delete();
+
+        return redirect()->route('idea.index')->with('success', 'Idea deleted successfully.');
     }
 }

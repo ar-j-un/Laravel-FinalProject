@@ -10,7 +10,13 @@
                     <x-icons.external />
                     Edit Idea
                 </button>
+
+                <form action="{{ route('idea.destroy', $idea) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
                 <button class="btn btn-outlined text-red-500">Delete</button>
+                </form>
+
             </div>
         </div>
         <h1 class="font-bold text-4x1 py-12">{{ $idea->title }}</h1>

@@ -21,7 +21,7 @@
         tabindex="-1"
         
     >
-        <x-card @click.away="show = false" class="shadow-xl max-w-2xl w-full max-h-[80dvh] overflow-auto">
+        <x-card is="div" @click.away="show = false" class="shadow-xl max-w-2xl w-full max-h-[80dvh] overflow-auto">
             <div class="flex justify-between items-center">
                 <h2 id="modal-{{ $name }}-title" class="text-xl font-bold">{{ $title }}</h2>
 

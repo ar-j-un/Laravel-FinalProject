@@ -4,9 +4,11 @@
         <header class="py-8 md:py-12">
                 <h1 class="text-3xl font-bold text-center mb-8">All Ideas</h1>
                 <p class="text-muted-foreground text-sm mt-2">Capture your thoughts. Make a plan.</p>
+
                 <x-card
                     x-data
-                    @click="$dispatch('open-modal', { name: 'create-idea' })"
+                    {{-- x-on:click="$dispatch('open-modal', { name: 'create-idea' })" --}}
+                    @click="$dispatch('open-modal','create-idea')"
                     is="button"
                     class="mt-10 cursor-pointer h-32 w-full text-left"
                     >
@@ -48,6 +50,21 @@
                 @endforelse
             </div>
     </div>
+
+<!-- modal -->
+    <div
+        x-data="{ show: false }"
+        x-show="show"
+        x-on:keydown.escape.window="show = false"
+        {{-- @open-modal.window="alert('heard that!')" --}}
+        @open-modal.window="show = true"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs"
+        >
+        <x-card>
+        <p>I am a modal.</p>
+        </x-card>
+    </div>
+
     </div>
 
 </x-layout>

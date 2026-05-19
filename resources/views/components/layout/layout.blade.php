@@ -13,6 +13,11 @@
         <main class="max-w-7xl mx-auto px-6 pb-10 py-6">
             {{ $slot }}
         </main>
+
+        {{-- <x-modal name="create-idea">
+        {{-- your create idea form here --}}
+        {{-- </x-modal> --}}
+
         
         @if(session('success'))
             <div

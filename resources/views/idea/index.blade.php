@@ -63,6 +63,7 @@
                         name="title"
                         placeholder="Enter an idea for your title"
                         autofocus
+                        required
                     />
 
                     <div class="space-y-2">
@@ -83,6 +84,7 @@
 
                             <input type="hidden" name="status" :value="status" class="input">
                         </div>
+                        <x-form.error name="status" />
                     </div>
 
                     <x-form.field
@@ -91,6 +93,10 @@
                         type="textarea"
                         placeholder="Describe your idea..."
                     />
+                    <div class="flex justify-end gap-x-5">
+                        <button type="button">Cancel</button>
+                        <button type="submit" class="btn">Create</button>
+                    </div>
                 </div>
             </form>
         </x-modal>

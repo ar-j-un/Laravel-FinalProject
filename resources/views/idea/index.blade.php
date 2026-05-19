@@ -51,16 +51,21 @@
             </div>
     </div>
 
-<!-- modal -->
+    {{-- <!-- modal -> --}}
     <div
-        x-data="{ show: false }"
+        x-data="{ show: false, name: 'create-idea' }"
         x-show="show"
-        x-on:keydown.escape.window="show = false"
-        {{-- @open-modal.window="alert('heard that!')" --}}
-        @open-modal.window="show = true"
+        @open-modal.window="if($event.detail === name) show = true;"
+        @keydown.escape.window="show = false"
+        x-transition:enter="ease-out duration-200"
+        x-transition:enter-start="opacity-0 translate-y-4 translate-x-4"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0 translate-y-4 translate-x-4"
         class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs"
-        >
-        <x-card>
+    >
+        <x-card @click.away="show = false">
         <p>I am a modal.</p>
         </x-card>
     </div>
@@ -71,9 +76,24 @@
 
 
 
- {{-- <div>
+    {{-- <div>
             <a href="/ideas" class="btn {{ request('status') === null ? 'btn-primary' : 'btn-outlined' }}">All</a>
             <a href="/ideas?status=pending" class="btn {{ request('status') === 'pending' ? 'btn-primary' : 'btn-outlined' }}">Pending</a>
             <a href="/ideas?status=in_progress" class="btn {{ request('status') === 'in_progress' ? 'btn-primary' : 'btn-outlined' }}">In Progress</a>
             <a href="/ideas?status=completed" class="btn {{ request('status') === 'completed' ? 'btn-primary' : 'btn-outlined' }}">Completed</a>
         </div> --}}
+
+
+        {{-- <!-- modal -->
+        <div
+        x-data="{ show: false }"
+        x-show="show"
+        x-on:keydown.escape.window="show = false"
+        {{-- @open-modal.window="alert('heard that!')" --}}
+        {{-- x-on:open-modal.window="if($event.detail === 'create-idea') show = true"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs"
+        >
+        <x-card>
+        <p>I am a modal.</p>
+        </x-card>
+    </div> --}}

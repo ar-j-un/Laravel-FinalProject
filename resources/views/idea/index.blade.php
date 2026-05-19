@@ -10,6 +10,7 @@
                     {{-- x-on:click="$dispatch('open-modal', { name: 'create-idea' })" --}}
                     @click="$dispatch('open-modal','create-idea')"
                     is="button"
+                    type="button"
                     class="mt-10 cursor-pointer h-32 w-full text-left"
                     >
                     <p>What's the idea?</p>
@@ -79,7 +80,7 @@
         {{-- x-on:open-modal.window="if($event.detail === 'create-idea') show = true"
         class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs"
         >
-        <x-card>
+        <x-card @click.away="show = false">
         <p>I am a modal.</p>
         </x-card>
     </div> --}}

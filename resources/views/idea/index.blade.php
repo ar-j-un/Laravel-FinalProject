@@ -4,6 +4,17 @@
         <header class="py-8 md:py-12">
                 <h1 class="text-3xl font-bold text-center mb-8">All Ideas</h1>
                 <p class="text-muted-foreground text-sm mt-2">Capture your thoughts. Make a plan.</p>
+
+                <x-card
+                    x-data
+                    {{-- x-on:click="$dispatch('open-modal', { name: 'create-idea' })" --}}
+                    @click="$dispatch('open-modal','create-idea')"
+                    is="button"
+                    type="button"
+                    class="mt-10 cursor-pointer h-32 w-full text-left"
+                    >
+                    <p>What's the idea?</p>
+                </x-card>
         </header>
 
         <div>
@@ -40,15 +51,80 @@
                 @endforelse
             </div>
     </div>
+
+    {{-- <!-- modal -> --}}
+        <x-modal name="create-idea" title="New Idea">
+            <form x-data="{ status: 'pending'}" method="POST" action="{{ route('idea.store') }}">
+                @csrf
+
+                <div class="space-y-6">
+                    <x-form.field
+                        label="Title"
+                        name="title"
+                        placeholder="Enter an idea for your title"
+                        autofocus
+                        required
+                    />
+
+                    <div class="space-y-2">
+                        <label for="status" class="label">Status</label>
+
+                        <div class="flex gap-x-3">
+                            @foreach (App\IdeaStatus::cases() as $status)
+                                <button
+                                    type="button"
+                                    @click="status = @js($status->value)"
+                                    class="btn flex-1 h-10"
+                                    {{-- :class="status === @js($status->value) ? 'btn-primary' : 'btn-outlined'" --}}
+                                    :class="{'btn-outlined': status !== @js($status->value)}"
+                                >
+                                    {{ $status->label() }}
+                                </button>
+                            @endforeach
+
+                            <input type="hidden" name="status" :value="status" class="input">
+                        </div>
+                        <x-form.error name="status" />
+                    </div>
+
+                    <x-form.field
+                        label="Description"
+                        name="description"
+                        type="textarea"
+                        placeholder="Describe your idea..."
+                    />
+                    <div class="flex justify-end gap-x-5">
+                        <button type="button" @click="$dispatch('close-modal')">Cancel</button>
+                        <button type="submit" class="btn">Create</button>
+                    </div>
+                </div>
+            </form>
+        </x-modal>
+
     </div>
 
 </x-layout>
 
 
 
- {{-- <div>
+    {{-- <div>
             <a href="/ideas" class="btn {{ request('status') === null ? 'btn-primary' : 'btn-outlined' }}">All</a>
             <a href="/ideas?status=pending" class="btn {{ request('status') === 'pending' ? 'btn-primary' : 'btn-outlined' }}">Pending</a>
             <a href="/ideas?status=in_progress" class="btn {{ request('status') === 'in_progress' ? 'btn-primary' : 'btn-outlined' }}">In Progress</a>
             <a href="/ideas?status=completed" class="btn {{ request('status') === 'completed' ? 'btn-primary' : 'btn-outlined' }}">Completed</a>
         </div> --}}
+
+
+        {{-- <!-- modal -->
+        <div
+        x-data="{ show: false }"
+        x-show="show"
+        x-on:keydown.escape.window="show = false"
+        {{-- @open-modal.window="alert('heard that!')" --}}
+        {{-- x-on:open-modal.window="if($event.detail === 'create-idea') show = true"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs"
+        >
+        <x-card @click.away="show = false">
+        <p>I am a modal.</p>
+        </x-card>
+    </div> --}}

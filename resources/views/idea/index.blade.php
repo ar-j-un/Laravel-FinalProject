@@ -94,7 +94,7 @@
                         placeholder="Describe your idea..."
                     />
                     <div class="flex justify-end gap-x-5">
-                        <button type="button">Cancel</button>
+                        <button type="button" @click="$dispatch('close-modal')">Cancel</button>
                         <button type="submit" class="btn">Create</button>
                     </div>
                 </div>

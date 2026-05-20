@@ -95,6 +95,27 @@
                         type="textarea"
                         placeholder="Describe your idea..."
                     />
+
+                    <div>
+                        <fieldset class="space-y-3">
+                            <legend class="label">Links</legend>
+
+                            <div class="flex gap-x-2 items-center">
+                                <input
+                                    type="url"
+                                    id="new-link"
+                                    placeholder="http://example.com"
+                                    autocomplete="url"
+                                    class="input flex-1"
+                                    spellcheck="false"
+                                >
+                                <button type="button">
+                                    <x-icons.close class="rotate-45" />
+                                </button>
+                            </div>
+                        </fieldset>
+                    </div>
+
                     <div class="flex justify-end gap-x-5">
                         <button type="button" @click="$dispatch('close-modal')">Cancel</button>
                         <button type="submit" class="btn">Create</button>

@@ -55,7 +55,15 @@
 
     {{-- <!-- modal -> --}}
         <x-modal name="create-idea" title="New Idea">
-            <form x-data="{ status: 'pending'}" method="POST" action="{{ route('idea.store') }}">
+            <form 
+            x-data="{ 
+            status: 'pending',
+            newLink: '',
+            links: [],
+            }" 
+            method="POST" 
+            action="{{ route('idea.store') }}"
+            >
                 @csrf
 
                 <div class="space-y-6">
@@ -100,8 +108,13 @@
                         <fieldset class="space-y-3">
                             <legend class="label">Links</legend>
 
+                            <template x-for="link in links">
+                                <input type="hidden" name="links[]" x-model="link">
+                            </template>
+
                             <div class="flex gap-x-2 items-center">
                                 <input
+                                    x-model="newLink"
                                     type="url"
                                     id="new-link"
                                     placeholder="http://example.com"
@@ -109,10 +122,12 @@
                                     class="input flex-1"
                                     spellcheck="false"
                                 >
-                                <button type="button">
+                                <button type="button" @click="links.push(newLink.trim()); newLink = ''"
+                                :disabled="newLink.trim().length === 0">
                                     <x-icons.close class="rotate-45" />
                                 </button>
                             </div>
+
                         </fieldset>
                     </div>
 

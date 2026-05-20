@@ -4,7 +4,7 @@ use App\Models\Idea;
 use App\Models\User;
 
 it('creates a new idea', function () {
-    $this->actingAs(User::factory()->create());
+    $this->actingAs($user = User::factory()->create());
 
     visit('/ideas')
         ->click('@modal-form-button')
@@ -14,7 +14,7 @@ it('creates a new idea', function () {
         ->click('Create')
         ->assertPathIs('/ideas');
 
-    expect(Idea::first())->toMatchArray([
+    expect($user->ideas()->first())->toMatchArray([
         'title' => 'Some Example Title',
         'status' => 'completed',
         'description' => 'An example description',

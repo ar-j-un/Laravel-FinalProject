@@ -108,8 +108,21 @@
                         <fieldset class="space-y-3">
                             <legend class="label">Links</legend>
 
-                            <template x-for="link in links">
-                                <input type="hidden" name="links[]" x-model="link">
+                            <template x-for="(link, index) in links">
+                                <div class="flex gap-x-2 items-center">
+
+                                <input name="links[]" x-model="link" class="input">
+
+                                <button
+                                    type="button" 
+                                    @click="links.splice(index, 1)"
+                                    aria-label="Remove link button"
+                                    class="form-muted-icon"
+                                >
+                                    <x-icons.close />
+                                </button>
+
+                                </div>
                             </template>
 
                             <div class="flex gap-x-2 items-center">
@@ -122,8 +135,14 @@
                                     class="input flex-1"
                                     spellcheck="false"
                                 >
-                                <button type="button" @click="links.push(newLink.trim()); newLink = ''"
-                                :disabled="newLink.trim().length === 0">
+                                <button
+                                    type="button" 
+                                    @click="links.push(newLink.trim()); newLink = ''"
+                                    :disabled="newLink.trim().length === 0"
+                                    aria-label="Add New link button"
+                                    class="form-muted-icon"
+
+                                >
                                     <x-icons.close class="rotate-45" />
                                 </button>
                             </div>
@@ -132,7 +151,7 @@
                     </div>
 
                     <div class="flex justify-end gap-x-5">
-                        <button type="button" @click="$dispatch('close-modal')">Cancel</button>
+                        <button type="reset" @click="$dispatch('close-modal')">Cancel</button>
                         <button type="submit" class="btn">Create</button>
                     </div>
                 </div>

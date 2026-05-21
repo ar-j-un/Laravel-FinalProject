@@ -44,6 +44,7 @@ class IdeaController extends Controller
      */
     public function store(StoreIdeaRequest $request)
     {
+
         Auth::user()->ideas()->create($request->validated());
 
         return redirect()->route('idea.index')->with('success', 'Idea created successfully.');

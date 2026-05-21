@@ -40,11 +40,18 @@
                     <div class="mt-3 space-y-2">
                         @foreach ($idea->steps as $step)
                             <x-card >
+
+                                <form method="POST" action="{{ route('step.update', $step) }}">
+                                    @csrf
+                                    @method('PATCH')
+
                                 <div class="flex items-center gap-x-3">
-                                    <button class="size-5 flex items-center justify-center rounded-lg text-primary-foreground border border-primary
+                                    <button type="submit" role="checkbox"
+                                    class="size-5 flex items-center justify-center rounded-lg text-primary-foreground border border-primary
                                     {{ $step->completed ? 'bg-primary': 'border border-primary'}}">&check;</button>
                                     <span>{{ $step->description }}</span>
                                 </div>
+                                </form>
                             </x-card>
                         @endforeach
                     </div>

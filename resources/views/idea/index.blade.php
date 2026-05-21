@@ -130,6 +130,7 @@
                                     x-model="newLink"
                                     type="url"
                                     id="new-link"
+                                    data-test="new-link"
                                     placeholder="http://example.com"
                                     autocomplete="url"
                                     class="input flex-1"
@@ -138,6 +139,7 @@
                                 <button
                                     type="button" 
                                     @click="links.push(newLink.trim()); newLink = ''"
+                                    data-test="add-new-link-button"
                                     :disabled="newLink.trim().length === 0"
                                     aria-label="Add New link button"
                                     class="form-muted-icon"

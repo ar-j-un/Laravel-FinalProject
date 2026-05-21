@@ -33,6 +33,24 @@
                 <div class="text-foreground max-w-none cursor-pointer">{{ $idea->description }}</div>
             </x-card>
 
+            @if ($idea->steps->count())
+                <div>
+                    <h3 class="font-bold text-xl mt-6">Actionable Steps</h3>
+
+                    <div class="mt-3 space-y-2">
+                        @foreach ($idea->steps as $step)
+                            <x-card >
+                                <div class="flex items-center gap-x-3">
+                                    <button class="size-5 flex items-center justify-center rounded-lg text-primary-foreground border border-primary
+                                    {{ $step->completed ? 'bg-primary': 'border border-primary'}}">&check;</button>
+                                    <span>{{ $step->description }}</span>
+                                </div>
+                            </x-card>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             @if($idea->links?->count())
                 <div>
                     <h3 class="font-bold text-xl mt-6">Links</h3>

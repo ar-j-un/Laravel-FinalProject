@@ -5,6 +5,9 @@ declare(strict_types=1);
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+// uses(DatabaseMigrations::class)->in('Browser');
+// uses(RefreshDatabase::class)->in('Feature');
+
 // use Tests\DuskTestCase;
 
 // pest()->extend(DuskTestCase::class)

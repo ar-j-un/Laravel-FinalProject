@@ -3,15 +3,18 @@
 namespace App\Actions;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Support\Facades\DB;
 
 class CreateIdea
 {
-    public function handle(array $attributes, ?User $user = null): void
+    public function __construct(#[CurrentUser()] protected User $user)
     {
-        /** @var User */
-        $user ??= Auth::user();
+        //
+    }
+
+    public function handle(array $attributes): void
+    {
 
         $data = collect($attributes)->only([
             'title', 'description', 'status', 'links',
@@ -23,9 +26,9 @@ class CreateIdea
 
         }
 
-        DB::transaction(function () use ($user, $data) {
+        DB::transaction(function () use ($data) {
 
-            $idea = $user->ideas()->create($data);
+            $idea = $this->user->ideas()->create($data);
 
             $steps = collect($attributes['steps'] ?? [])->map(fn ($step) => ['description' => $step]);
 

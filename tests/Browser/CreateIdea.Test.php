@@ -16,7 +16,9 @@ it('creates a new idea', function () {
         ->fill('@new-link', 'https://example.com')
         ->click('@add-new-link-button')
         ->click('Create')
+        // ->screenshot('after-submit')
         ->assertPathIs('/ideas');
+    // dd(Idea::count(), $user->ideas()->first());
 
     expect($user->ideas()->first())->toMatchArray([
         'title' => 'Some Example Title',

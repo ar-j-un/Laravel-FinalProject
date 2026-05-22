@@ -22,7 +22,9 @@
 
         <div class="mt-8 space-y-6">
             @if ($idea->image_path)
-                <img src="{{ asset('storage/' . $idea->image_path) }}" alt="">
+                <div class="mb-4 -mx-4 -mt-4 rounded-1g overflow-hidden">
+                    <img src="{{ asset('storage/' . $idea->image_path) }}" alt="" class="w-full h-auto object-cover">
+                </div>
             @endif
         
         <div class="mt-12 space-y-6">

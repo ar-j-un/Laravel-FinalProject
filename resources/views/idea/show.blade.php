@@ -49,7 +49,7 @@
                                     <button type="submit" role="checkbox"
                                     class="size-5 flex items-center justify-center rounded-lg text-primary-foreground border border-primary
                                     {{ $step->completed ? 'bg-primary': 'border border-primary'}}">&check;</button>
-                                    <span>{{ $step->description }}</span>
+                                    <span class="{{ $step->completed ? 'line-through text-muted-foreground' : '' }}"">{{ $step->description }}</span>
                                 </div>
                                 </form>
                             </x-card>

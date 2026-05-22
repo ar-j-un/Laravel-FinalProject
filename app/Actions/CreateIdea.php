@@ -2,22 +2,31 @@
 
 namespace App\Actions;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class CreateIdea
 {
-    public function handle(array $attributes)
+    public function handle(array $attributes, ?User $user = null): void
     {
+        /** @var User */
+        $user ??= Auth::user();
 
-        $idea = Auth::user()->ideas()->create(collect($attributes)->except(['steps', 'image'])->toArray());
+        $data = collect($attributes)->only([
+            'title', 'description', 'status', 'links',
+        ])->toArray();
 
-        $idea->steps()->createMany(
-            collect($attributes['steps'])->map(fn ($step) => ['description' => $step])
-        );
+        if ($attributes['image'] ?? false) {
 
-        $imagePath = $attributes['image']->store('ideas', 'public');
+            $data['image_path'] = $attributes['image']->store('ideas', 'public');
 
-        $idea->update(['image_path' => $imagePath]);
+        }
+
+        $idea = $user->ideas()->create($data);
+
+        $steps = collect($attributes['steps'] ?? [])->map(fn ($step) => ['description' => $step]);
+
+        $idea->steps()->createMany($steps);
 
     }
 }

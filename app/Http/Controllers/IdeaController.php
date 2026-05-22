@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateIdea;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\Models\Idea;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,7 +47,11 @@ class IdeaController extends Controller
     public function store(StoreIdeaRequest $request)
     {
 
-        $idea = Auth::user()->ideas()->create($request->safe()->except(['steps', 'image']));
+        (new CreateIdea)->handle($request->safe()->all());
+
+        return redirect()->route('idea.index')->with('success', 'Idea created successfully.');
+
+        /* $idea = Auth::user()->ideas()->create($request->safe()->except(['steps', 'image']));
 
         $idea->steps()->createMany(
             collect($request->steps)->map(fn ($step) => ['description' => $step])
@@ -55,9 +61,8 @@ class IdeaController extends Controller
 
         $idea->update(['image_path' => $imagePath]);
 
-        // Auth::user()->ideas()->create($request->validated());
+        // Auth::user()->ideas()->create($request->validated()); */
 
-        return redirect()->route('idea.index')->with('success', 'Idea created successfully.');
     }
 
     /**

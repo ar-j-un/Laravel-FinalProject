@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CreateIdea
 {
@@ -22,11 +23,15 @@ class CreateIdea
 
         }
 
-        $idea = $user->ideas()->create($data);
+        DB::transaction(function () use ($user, $data) {
 
-        $steps = collect($attributes['steps'] ?? [])->map(fn ($step) => ['description' => $step]);
+            $idea = $user->ideas()->create($data);
 
-        $idea->steps()->createMany($steps);
+            $steps = collect($attributes['steps'] ?? [])->map(fn ($step) => ['description' => $step]);
+
+            $idea->steps()->createMany($steps);
+
+        });
 
     }
 }

@@ -7,9 +7,9 @@
         x-data="{ 
             status: @js(old('status', $idea->status->value)),
             newLink: '',
-            links: [],
+            links: @js(old('links', $idea->links ?? [])),
             newStep: '',
-            steps: [],
+            steps: @js(old('steps', $idea->steps->map(fn($step) => $step->description))),
         }" 
     method="POST" 
     action="{{ route('idea.store') }}"

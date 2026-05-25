@@ -15,7 +15,8 @@ Route::post('/ideas', [IdeaController::class, 'store'])->name('idea.store')->mid
 
 Route::get('/ideas/{idea}', [IdeaController::class, 'show'])
     ->name('idea.show')
-    ->middleware('auth', 'can:workWith,idea');
+    ->middleware('auth')
+    ->can('workWith', 'idea');
 
 Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])->name('idea.destroy')->middleware('auth');
 
@@ -30,3 +31,4 @@ Route::post('/login', [SessionController::class, 'store'])->middleware('guest');
 Route::post('/logout', [SessionController::class, 'destroy'])->middleware('auth');
 
 // Route::get('/', fn () => view('welcome'));
+// ->middleware('auth', 'can:workWith,idea');

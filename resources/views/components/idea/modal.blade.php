@@ -173,4 +173,10 @@
             </div>
         </div>
     </form>
+    @if ($idea->image_path)
+        <form method="POST" action="{{ route('idea.image.destroy', $idea) }}" id="delete-image-form">
+            @csrf
+            @method('DELETE')
+        </form>
+    @endif
 </x-modal>

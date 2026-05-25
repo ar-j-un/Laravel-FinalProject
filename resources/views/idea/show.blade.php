@@ -10,7 +10,7 @@
                     x-data
                     class="btn btn-outlined"
                     data-test="edit-idea-button"
-                    @click="$dispatch('open-modal','create-idea')"
+                    @click="$dispatch('open-modal','edit-idea')"
                 >
                     <x-icons.external />
                     Edit Idea
@@ -85,6 +85,6 @@
             @endif
 
         </div>
-        <x-idea.modal />
+        <x-idea.modal :idea="$idea"/>
     </div>
 </x-layout>

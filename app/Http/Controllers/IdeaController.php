@@ -9,8 +9,10 @@ use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\Models\Idea;
 use GuzzleHttp\Promise\Create;
+// use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class IdeaController extends Controller
 {
@@ -70,6 +72,8 @@ class IdeaController extends Controller
      */
     public function show(Idea $idea)
     {
+        Gate::authorize('workWith', $idea);
+
         return view('idea.show', [
             'idea' => $idea,
         ]);

@@ -8,13 +8,15 @@ use Illuminate\Support\Facades\DB;
 
 class CreateIdea
 {
-    public function __construct(#[CurrentUser()] protected User $user)
+    public function __construct(#[CurrentUser] protected User $user)
     {
         //
     }
 
     public function handle(array $attributes): void
     {
+
+        // dd($attributes);
 
         $data = collect($attributes)->only([
             'title', 'description', 'status', 'links',
@@ -26,7 +28,7 @@ class CreateIdea
 
         }
 
-        DB::transaction(function () use ($data) {
+        DB::transaction(function () use ($data, $attributes) {
 
             $idea = $this->user->ideas()->create($data);
 

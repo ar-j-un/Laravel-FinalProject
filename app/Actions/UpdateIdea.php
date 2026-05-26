@@ -2,18 +2,12 @@
 
 namespace App\Actions;
 
-use App\Models\User;
-use Illuminate\Container\Attributes\CurrentUser;
+use App\Models\Idea;
 use Illuminate\Support\Facades\DB;
 
-class CreateIdea
+class UpdateIdea
 {
-    public function __construct(#[CurrentUser] protected User $user)
-    {
-        //
-    }
-
-    public function handle(array $attributes): void
+    public function handle(array $attributes, Idea $idea): void
     {
 
         // dd($attributes);
@@ -28,9 +22,11 @@ class CreateIdea
 
         }
 
-        DB::transaction(function () use ($data, $attributes) {
+        DB::transaction(function () use ($idea, $data, $attributes) {
 
-            $idea = $this->user->ideas()->create($data);
+            $idea->update($data);
+
+            $idea->steps()->delete();
 
             $idea->steps()->createMany(
                 collect($attributes['steps'])->map(fn ($step) => [
@@ -40,10 +36,6 @@ class CreateIdea
             );
 
             // $idea->steps()->createMany($attributes['steps'] ?? []);
-
-            // $steps = collect($attributes['steps'] ?? [])->map(fn ($step) => ['description' => $step]);
-
-            // $idea->steps()->createMany($steps);
 
         });
 

@@ -9,9 +9,10 @@
             newLink: '',
             links: @js(old('links', $idea->links ?? [])),
             newStep: '',
-            steps: @js(old('steps', $idea->steps->map(fn($step) => $step->description))),
+            steps: @js(old('steps', $idea->steps->map->only(['id', 'description', 'completed']))),
+            {{-- steps: @js(old('steps', $idea->steps->map(fn($step) => $step->description))), --}}
         }" 
-    method="POST" 
+    method="POST"   
     action="{{ $idea->exists ? route('idea.update', $idea) : route('idea.store') }}"
     enctype="multipart/form-data"
     >
@@ -80,10 +81,24 @@
                 <fieldset class="space-y-3">
                     <legend class="label">Actionable Steps</legend>
 
-                    <template x-for="(step, index) in steps">
+                    <template x-for="(step, index) in steps" :key"index">
                         <div class="flex gap-x-2 items-center">
 
-                        <input name="steps[]" x-model="step" class="input">
+                        {{-- <input name="steps[]" x-model="step" class="input"> --}}
+
+                        {{-- <input :name="'steps[${index}][description]'" x-model="step.description" class="input" readonly>
+                        <input type="hidden" :name="'steps[${index}][completed]'" x-model="step.completed ? '1' : '0'" class="input" readonly> --}}
+
+                        <input 
+                            :name="`steps[${index}][description]`" 
+                            x-model="steps[index].description" 
+                            class="input"
+                        >
+                        <input 
+                            type="hidden" 
+                            :name="`steps[${index}][completed]`" 
+                            :value="steps[index].completed ? '1' : '0'"
+                        >
 
                         <button
                             type="button" 
@@ -108,7 +123,11 @@
                         >
                         <button
                             type="button" 
-                            @click="steps.push(newStep.trim()); newStep = ''"
+                            @click="
+                            steps.push({ description: newStep.trim(), completed: false });
+                            newStep = '';
+                            "
+                            {{-- @click="steps.push(newStep.trim()); newStep = ''" --}}
                             data-test="add-new-step-button"
                             :disabled="newStep.trim().length === 0"
                             aria-label="Add New step button"
@@ -131,7 +150,7 @@
                         <div class="flex gap-x-2 items-center">
 
                         <input name="links[]" x-model="link" class="input">
-
+                        
                         <button
                             type="button" 
                             @click="links.splice(index, 1)"
@@ -162,7 +181,6 @@
                             :disabled="newLink.trim().length === 0"
                             aria-label="Add New link button"
                             class="form-muted-icon"
-
                         >       
                             <x-icons.close class="rotate-45" />
                         </button>
@@ -173,7 +191,7 @@
 
             <div class="flex justify-end gap-x-5">
                 <button type="{{ $idea->exists ? 'button': 'reset' }}" @click="$dispatch('close-modal')">Cancel</button>
-                <button type="submit" class="btn">{{ $idea->exists ? 'Update': 'Create' }}</button>
+                <button type="submit" class="btn">{{ $idea->exists ? 'Update' : 'Create' }}</button>
             </div>
         </div>
     </form>

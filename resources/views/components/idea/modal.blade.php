@@ -12,10 +12,14 @@
             steps: @js(old('steps', $idea->steps->map(fn($step) => $step->description))),
         }" 
     method="POST" 
-    action="{{ route('idea.store') }}"
+    action="{{ $idea->exists ? route('idea.update', $idea) : route('idea.store') }}"
     enctype="multipart/form-data"
     >
         @csrf
+
+        @if ($idea->exists)
+            @method('PATCH')
+        @endif
 
         <div class="space-y-6">
             <x-form.field
@@ -168,8 +172,8 @@
             </div>
 
             <div class="flex justify-end gap-x-5">
-                <button type="reset" @click="$dispatch('close-modal')">Cancel</button>
-                <button type="submit" class="btn">Create</button>
+                <button type="{{ $idea->exists ? 'button': 'reset' }}" @click="$dispatch('close-modal')">Cancel</button>
+                <button type="submit" class="btn">{{ $idea->exists ? 'Update': 'Create' }}</button>
             </div>
         </div>
     </form>

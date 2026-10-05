@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreIdeaRequest;
-use App\Http\Requests\UpdateIdeaRequest;
+use App\Actions\CreateIdea;
+use App\Actions\UpdateIdea;
+use App\Http\Requests\IdeaRequest;
 use App\Models\Idea;
+// use GuzzleHttp\Promise\Create;
+// use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class IdeaController extends Controller
 {
@@ -42,12 +46,25 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreIdeaRequest $request)
+    public function store(IdeaRequest $request, CreateIdea $action)
     {
 
-        Auth::user()->ideas()->create($request->validated());
+        $action->handle($request->safe()->all());
 
         return redirect()->route('idea.index')->with('success', 'Idea created successfully.');
+
+        /* $idea = Auth::user()->ideas()->create($request->safe()->except(['steps', 'image']));
+
+        $idea->steps()->createMany(
+            collect($request->steps)->map(fn ($step) => ['description' => $step])
+        );
+
+        $imagePath = $request->image->store('ideas', 'public');
+
+        $idea->update(['image_path' => $imagePath]);
+
+        // Auth::user()->ideas()->create($request->validated()); */
+
     }
 
     /**
@@ -55,6 +72,8 @@ class IdeaController extends Controller
      */
     public function show(Idea $idea)
     {
+        Gate::authorize('workWith', $idea);
+
         return view('idea.show', [
             'idea' => $idea,
         ]);
@@ -71,9 +90,16 @@ class IdeaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateIdeaRequest $request, Idea $idea): void
+    public function update(IdeaRequest $request, Idea $idea, UpdateIdea $action)
     {
-        //
+        // dd($request->validated());
+
+        Gate::authorize('workWith', $idea);
+
+        $action->handle($request->safe()->all(), $idea);
+
+        return back()->with('success', 'Idea updated!');
+
     }
 
     /**
@@ -82,6 +108,7 @@ class IdeaController extends Controller
     public function destroy(Idea $idea)
     {
         // authorize that the user can delete this idea
+        Gate::authorize('workWith', $idea);
 
         $idea->delete();
 

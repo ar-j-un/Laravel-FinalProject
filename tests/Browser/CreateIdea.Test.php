@@ -11,15 +11,27 @@ it('creates a new idea', function () {
         ->fill('title', 'Some Example Title')
         ->click('@create-status-completed-button')
         ->fill('description', 'An example description')
+        ->fill('@new-link', 'https://examplelink.com')
+        ->click('@add-new-link-button')
+        ->fill('@new-link', 'https://example.com')
+        ->click('@add-new-link-button')
+        ->fill('@new-step', 'Step 1')
+        ->click('@add-new-step-button')
+        ->fill('@new-step', 'Step 2')
+        ->click('@add-new-step-button')
         ->click('Create')
+        // ->screenshot('after-submit')
         ->assertPathIs('/ideas');
+    // dd(Idea::count(), $user->ideas()->first());
 
-    expect($user->ideas()->first())->toMatchArray([
+    expect($idea = $user->ideas()->first())->toMatchArray([
         'title' => 'Some Example Title',
         'status' => 'completed',
         'description' => 'An example description',
+        'links' => ['https://examplelink.com', 'https://example.com'],
     ]);
 
+    expect($idea->steps)->toHaveCount(2);
 });
 
 // ->debug();
